@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Vigil",
+  "mainBinaryName": "vigil",
+  "version": "0.4.1",
+  "identifier": "de.vigil.app",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://127.0.0.1:5296",
+    "beforeBuildCommand": "npm run build && cargo build --release -p vigil-helper",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Vigil",
+        "width": 1180,
+        "height": 780,
+        "minWidth": 1080,
+        "minHeight": 740,
+        "center": true,
+        "visible": false,
+        "backgroundColor": "#151a19"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "deb"
+    ],
+    "category": "Utility",
+    "shortDescription": "Virenschutz für Linux Mint",
+    "longDescription": "Vigil prüft den Rechner mit ClamAV nach Zeitplan, überwacht Downloads, verwaltet die Quarantäne und prüft Updates, Firewall, Rootkits und Härtung.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/64x64.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.png"
+    ],
+    "linux": {
+      "deb": {
+        "depends": [
+          "clamav",
+          "clamav-daemon",
+          "clamav-freshclam",
+          "rkhunter",
+          "lynis",
+          "libnotify-bin",
+          "pkexec",
+          "rsync",
+          "gpgv"
+        ],
+        "files": {
+          "/usr/lib/vigil/vigil-helper": "../target/release/vigil-helper",
+          "/usr/lib/vigil/vigil-scan": "../target/release/vigil-helper",
+          "/usr/share/polkit-1/actions/de.vigil.policy": "../packaging/de.vigil.policy",
+          "/etc/xdg/autostart/vigil.desktop": "../packaging/vigil-autostart.desktop",
+          "/usr/lib/systemd/system/vigil-scan-quick.service": "../packaging/systemd/vigil-scan-quick.service",
+          "/usr/lib/systemd/system/vigil-scan-quick.timer": "../packaging/systemd/vigil-scan-quick.timer",
+          "/usr/lib/systemd/system/vigil-scan-full.service": "../packaging/systemd/vigil-scan-full.service",
+          "/usr/lib/systemd/system/vigil-scan-full.timer": "../packaging/systemd/vigil-scan-full.timer",
+          "/usr/lib/systemd/system/vigil-systemcheck.service": "../packaging/systemd/vigil-systemcheck.service",
+          "/usr/lib/systemd/system/vigil-systemcheck.timer": "../packaging/systemd/vigil-systemcheck.timer",
+          "/usr/lib/systemd/system/vigil-selfupdate.service": "../packaging/systemd/vigil-selfupdate.service",
+          "/usr/lib/systemd/system/vigil-selfupdate.timer": "../packaging/systemd/vigil-selfupdate.timer",
+          "/usr/lib/systemd/system/vigil-extrasigs.service": "../packaging/systemd/vigil-extrasigs.service",
+          "/usr/lib/systemd/system/vigil-extrasigs.timer": "../packaging/systemd/vigil-extrasigs.timer"
+        },
+        "postInstallScript": "../packaging/deb/postinst",
+        "preRemoveScript": "../packaging/deb/prerm"
+      }
+    },
+    "licenseFile": "../LICENSE"
+  }
+}

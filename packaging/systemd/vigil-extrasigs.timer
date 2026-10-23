@@ -1,0 +1,16 @@
+# Vigil: Zeitplan der zusätzlichen Virensignaturen. Den Abstand (1, 2, 4 oder 8 Stunden aus
+# "signatureIntervalHours") setzt set-config als Drop-in
+# /etc/systemd/system/vigil-extrasigs.timer.d/vigil.conf; set-config schaltet den Timer nur ein,
+# wenn "extraSignatures" gilt (Standard: an). Die feste zufällige Verzögerung je Rechner verteilt
+# die Abrufe über die Stunde, damit die Spiegel von Sanesecurity nicht gleichzeitig belastet werden.
+[Unit]
+Description=Vigil zusätzliche Virensignaturen nach Zeitplan
+
+[Timer]
+OnCalendar=*-*-* *:00:00
+RandomizedDelaySec=55min
+FixedRandomDelay=true
+Persistent=true
+
+[Install]
+WantedBy=timers.target

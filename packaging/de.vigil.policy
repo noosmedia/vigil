@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<!-- Vigil: Rechte für die beiden Helfer. Ziel: /usr/share/polkit-1/actions/de.vigil.policy -->
+<policyconfig>
+  <vendor>Vigil</vendor>
+
+  <!-- Prüfen ohne Passwort: scan, cancel, pause, resume, update-signatures, systemcheck,
+       pro-token (Freigabe erneuern), pro-ro (Vigil Pro nur lesend) -->
+  <action id="de.vigil.scan">
+    <description>Vigil: Virenprüfung und Systemcheck ausführen</description>
+    <message>Vigil möchte den Rechner auf Schadsoftware prüfen.</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/lib/vigil/vigil-scan</annotate>
+  </action>
+
+  <!-- Maßnahmen mit Passwort: Quarantäne, Löschen, Freigeben, Einstellungen, Behebungen,
+       Updates von Vigil (self-update), Vigil Pro (pro-install, pro-remove, pro) -->
+  <action id="de.vigil.manage">
+    <description>Vigil: Funde behandeln und Einstellungen ändern</description>
+    <message>Für diese Maßnahme benötigt Vigil Ihr Administratorpasswort.</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/lib/vigil/vigil-helper</annotate>
+  </action>
+</policyconfig>

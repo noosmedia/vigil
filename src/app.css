@@ -1,0 +1,650 @@
+/* Schriften lokal eingebunden, die App läuft ohne Internet */
+@import '@fontsource-variable/bricolage-grotesque/wdth.css';
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource-variable/instrument-sans/wdth.css';
+@import '@fontsource-variable/syne';
+@import '@fontsource-variable/unbounded';
+@import '@fontsource-variable/big-shoulders-display';
+@import '@fontsource-variable/hanken-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* ===== Farbschemata: je dunkel und hell, Mitteltöne statt Schwarz und Weiß ===== */
+
+/* Graphit: Graphit mit grünem Unterton, Minze als Statuslicht (Standard) */
+:root,
+:root[data-palette='graphit'][data-theme='dark'] {
+  --bg: #151a19;
+  --bg-raised: #1b2120;
+  --bg-sunk: #111514;
+  --line: #29302e;
+  --line-strong: #3a4341;
+  --text: #dde4e0;
+  --text-dim: #8e9a96;
+  --text-faint: #5d6865;
+  --safe: #8fe3b8;
+  --safe-rgb: 143, 227, 184;
+  --warn: #e8c170;
+  --warn-rgb: 232, 193, 112;
+  --threat: #ff6b57;
+  --threat-rgb: 255, 107, 87;
+  --field-dot-rgb: 221, 228, 224;
+  --ink-on-safe: #0f1a15;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+:root[data-palette='graphit'][data-theme='light'] {
+  /* Animation auf hellem Grund: „Tinte auf Papier“, runde zarte Punkte, Bewegung färbt sich */
+  --scene-gain: 1.25;
+  --scene-light: 1;
+  --bg: #e4e7e5;
+  --bg-raised: #ecefed;
+  --bg-sunk: #dadfdc;
+  --line: #c6cdca;
+  --line-strong: #aab3af;
+  --text: #1b2120;
+  --text-dim: #56625e;
+  --text-faint: #87918d;
+  --safe: #1d8a5a;
+  --safe-rgb: 29, 138, 90;
+  --warn: #a26a00;
+  --warn-rgb: 162, 106, 0;
+  --threat: #c7381f;
+  --threat-rgb: 199, 56, 31;
+  --field-dot-rgb: 27, 33, 32;
+  --ink-on-safe: #f1f5f2;
+  --shadow: 0 18px 50px rgba(30, 40, 36, 0.18);
+  color-scheme: light;
+}
+
+/* Tinte: schwarzweiß, das Statuslicht ist reiner Kontrast */
+:root[data-palette='tinte'][data-theme='dark'] {
+  --bg: #18191b;
+  --bg-raised: #1f2023;
+  --bg-sunk: #131416;
+  --line: #2c2d31;
+  --line-strong: #3d3f44;
+  --text: #e6e5e1;
+  --text-dim: #9a9a97;
+  --text-faint: #65666a;
+  --safe: #f0efea;
+  --safe-rgb: 240, 239, 234;
+  --warn: #d8b46b;
+  --warn-rgb: 216, 180, 107;
+  --threat: #ff6b57;
+  --threat-rgb: 255, 107, 87;
+  --field-dot-rgb: 230, 229, 225;
+  --ink-on-safe: #18191b;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+:root[data-palette='tinte'][data-theme='light'] {
+  /* Animation auf hellem Grund: „Tinte auf Papier“, runde zarte Punkte, Bewegung färbt sich */
+  --scene-gain: 1.25;
+  --scene-light: 1;
+  --bg: #eceae5;
+  --bg-raised: #f2f0ec;
+  --bg-sunk: #e2e0db;
+  --line: #d0cdc6;
+  --line-strong: #b3b0a9;
+  --text: #18191b;
+  --text-dim: #5c5d60;
+  --text-faint: #8d8d8c;
+  --safe: #18191b;
+  --safe-rgb: 24, 25, 27;
+  --warn: #946100;
+  --warn-rgb: 148, 97, 0;
+  --threat: #c7381f;
+  --threat-rgb: 199, 56, 31;
+  --field-dot-rgb: 24, 25, 27;
+  --ink-on-safe: #eceae5;
+  --shadow: 0 18px 50px rgba(30, 30, 30, 0.16);
+  color-scheme: light;
+}
+
+/* Glut: Anthrazit mit Bernstein */
+:root[data-palette='glut'][data-theme='dark'] {
+  --bg: #19181a;
+  --bg-raised: #211f21;
+  --bg-sunk: #141315;
+  --line: #2f2c2e;
+  --line-strong: #423e3f;
+  --text: #ebe5df;
+  --text-dim: #a19891;
+  --text-faint: #6c6461;
+  --safe: #f4a95a;
+  --safe-rgb: 244, 169, 90;
+  --warn: #f1d36e;
+  --warn-rgb: 241, 211, 110;
+  --threat: #ff5b4f;
+  --threat-rgb: 255, 91, 79;
+  --field-dot-rgb: 235, 229, 223;
+  --ink-on-safe: #1e140a;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+:root[data-palette='glut'][data-theme='light'] {
+  /* Animation auf hellem Grund: „Tinte auf Papier“, runde zarte Punkte, Bewegung färbt sich */
+  --scene-gain: 1.25;
+  --scene-light: 1;
+  --bg: #e7e5e4;
+  --bg-raised: #efedec;
+  --bg-sunk: #dddad9;
+  --line: #cbc6c4;
+  --line-strong: #ada7a4;
+  --text: #1f1c1b;
+  --text-dim: #625a56;
+  --text-faint: #908884;
+  --safe: #b35b05;
+  --safe-rgb: 179, 91, 5;
+  --warn: #8d6c00;
+  --warn-rgb: 141, 108, 0;
+  --threat: #c4301f;
+  --threat-rgb: 196, 48, 31;
+  --field-dot-rgb: 31, 28, 27;
+  --ink-on-safe: #fbf3ea;
+  --shadow: 0 18px 50px rgba(40, 30, 26, 0.16);
+  color-scheme: light;
+}
+
+/* Fjord: tiefes Petrol mit Eisgrün */
+:root[data-palette='fjord'][data-theme='dark'] {
+  --bg: #11191c;
+  --bg-raised: #172226;
+  --bg-sunk: #0d1416;
+  --line: #233136;
+  --line-strong: #344449;
+  --text: #dae6e8;
+  --text-dim: #88999d;
+  --text-faint: #566669;
+  --safe: #7fe1d1;
+  --safe-rgb: 127, 225, 209;
+  --warn: #e6c46c;
+  --warn-rgb: 230, 196, 108;
+  --threat: #ff6f61;
+  --threat-rgb: 255, 111, 97;
+  --field-dot-rgb: 218, 230, 232;
+  --ink-on-safe: #0b1d1a;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+:root[data-palette='fjord'][data-theme='light'] {
+  /* Animation auf hellem Grund: „Tinte auf Papier“, runde zarte Punkte, Bewegung färbt sich */
+  --scene-gain: 1.25;
+  --scene-light: 1;
+  --bg: #e1e8ea;
+  --bg-raised: #eaf0f1;
+  --bg-sunk: #d6dfe2;
+  --line: #c1cdd1;
+  --line-strong: #a3b2b6;
+  --text: #13212a;
+  --text-dim: #4e6168;
+  --text-faint: #82949a;
+  --safe: #0d7c70;
+  --safe-rgb: 13, 124, 112;
+  --warn: #946700;
+  --warn-rgb: 148, 103, 0;
+  --threat: #c2352a;
+  --threat-rgb: 194, 53, 42;
+  --field-dot-rgb: 19, 33, 42;
+  --ink-on-safe: #effaf8;
+  --shadow: 0 18px 50px rgba(19, 33, 42, 0.16);
+  color-scheme: light;
+}
+
+/* Moos: Olivgrau mit hellem Moosgrün */
+:root[data-palette='moos'][data-theme='dark'] {
+  --bg: #161914;
+  --bg-raised: #1d211a;
+  --bg-sunk: #121410;
+  --line: #2b3027;
+  --line-strong: #3c4237;
+  --text: #e1e6d9;
+  --text-dim: #969d8b;
+  --text-faint: #646b5b;
+  --safe: #bad979;
+  --safe-rgb: 186, 217, 121;
+  --warn: #e5c26b;
+  --warn-rgb: 229, 194, 107;
+  --threat: #ff6b57;
+  --threat-rgb: 255, 107, 87;
+  --field-dot-rgb: 225, 230, 217;
+  --ink-on-safe: #172008;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+:root[data-palette='moos'][data-theme='light'] {
+  /* Animation auf hellem Grund: „Tinte auf Papier“, runde zarte Punkte, Bewegung färbt sich */
+  --scene-gain: 1.25;
+  --scene-light: 1;
+  --bg: #e4e7de;
+  --bg-raised: #ecefe6;
+  --bg-sunk: #d9ddd2;
+  --line: #c6cbbd;
+  --line-strong: #a8ae9e;
+  --text: #1c2117;
+  --text-dim: #586050;
+  --text-faint: #8a9180;
+  --safe: #4e781d;
+  --safe-rgb: 78, 120, 29;
+  --warn: #8f6600;
+  --warn-rgb: 143, 102, 0;
+  --threat: #c2361f;
+  --threat-rgb: 194, 54, 31;
+  --field-dot-rgb: 28, 33, 23;
+  --ink-on-safe: #f3f8ea;
+  --shadow: 0 18px 50px rgba(28, 33, 23, 0.16);
+  color-scheme: light;
+}
+
+/* ===== Schriften für das Statuswort und Überschriften ===== */
+:root,
+:root[data-font='bricolage'] {
+  --font-display: 'Bricolage Grotesque Variable', 'Hanken Grotesk Variable', sans-serif;
+  --display-fvs: 'wdth' 75;
+  --display-weight: 700;
+  --display-tracking: -0.045em;
+  --display-transform: none;
+  --display-scale: 1;
+}
+:root[data-font='archivo'] {
+  --font-display: 'Archivo Variable', sans-serif;
+  --display-fvs: 'wdth' 64;
+  --display-weight: 800;
+  --display-tracking: -0.035em;
+  --display-transform: none;
+  --display-scale: 1;
+}
+:root[data-font='instrument'] {
+  --font-display: 'Instrument Sans Variable', sans-serif;
+  --display-fvs: 'wdth' 75;
+  --display-weight: 660;
+  --display-tracking: -0.045em;
+  --display-transform: none;
+  --display-scale: 0.98;
+}
+:root[data-font='syne'] {
+  --font-display: 'Syne Variable', sans-serif;
+  --display-fvs: normal;
+  --display-weight: 760;
+  --display-tracking: -0.04em;
+  --display-transform: none;
+  --display-scale: 0.84;
+}
+:root[data-font='unbounded'] {
+  --font-display: 'Unbounded Variable', sans-serif;
+  --display-fvs: normal;
+  --display-weight: 620;
+  --display-tracking: -0.05em;
+  --display-transform: none;
+  --display-scale: 0.7;
+}
+:root[data-font='bigshoulders'] {
+  --font-display: 'Big Shoulders Display Variable', sans-serif;
+  --display-fvs: normal;
+  --display-weight: 820;
+  --display-tracking: -0.005em;
+  --display-transform: uppercase;
+  --display-scale: 1.14;
+}
+
+/* ===== Gemeinsame Größen ===== */
+:root {
+  --font-body: 'Hanken Grotesk Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --radius: 4px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-fast: 160ms;
+  --t-normal: 280ms;
+  --t-slow: 600ms;
+  --pad: 32px;
+}
+
+/* Terminal: alles in Festbreitenschrift, eckig */
+:root[data-look='terminal'] {
+  --font-body: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-display: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --display-fvs: normal;
+  --display-weight: 700;
+  --display-tracking: -0.04em;
+  --display-transform: uppercase;
+  --display-scale: 0.62;
+  --radius: 0px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+  transition:
+    background-color var(--t-normal) ease,
+    color var(--t-normal) ease;
+}
+:root[data-look='terminal'] body {
+  font-size: 13px;
+}
+
+#app {
+  height: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(var(--safe-rgb), 0.3);
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* Schmale, unauffällige Bildlaufleisten */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 10px;
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Großes Statuswort und Seitentitel nutzen die gewählte Schrift */
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-fvs);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  text-transform: var(--display-transform);
+}
+
+/* ===== Schaltflächen ===== */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  font-weight: 560;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  transition:
+    background-color var(--t-fast) ease,
+    border-color var(--t-fast) ease,
+    color var(--t-fast) ease,
+    box-shadow var(--t-normal) ease,
+    transform var(--t-fast) var(--ease-out);
+}
+.btn:hover {
+  border-color: var(--text-dim);
+  background: var(--bg-raised);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn.primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+.btn.primary:hover {
+  background: var(--safe);
+  border-color: var(--safe);
+  color: var(--ink-on-safe);
+  box-shadow: 0 8px 26px rgba(var(--safe-rgb), 0.28);
+}
+.btn.danger {
+  border-color: rgba(var(--threat-rgb), 0.55);
+  color: var(--threat);
+}
+.btn.danger:hover {
+  background: rgba(var(--threat-rgb), 0.12);
+  border-color: var(--threat);
+}
+.btn.small {
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+.btn.ghost {
+  border-color: transparent;
+  color: var(--text-dim);
+}
+.btn.ghost:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+.btn.busy {
+  pointer-events: none;
+  opacity: 0.6;
+}
+/* Läuft: ein Lichtstreifen wandert über den Knopf (ohne Pseudo-Element, damit Looks sie frei nutzen können) */
+.btn.busy {
+  background-image: linear-gradient(90deg, transparent 0%, rgba(var(--field-dot-rgb), 0.16) 50%, transparent 100%);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: busy-sweep 1.1s var(--ease-inout) infinite;
+}
+@keyframes busy-sweep {
+  from {
+    background-position: -100% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+/* Terminal: Schaltflächen in eckigen Klammern */
+:root[data-look='terminal'] .btn {
+  border-style: dashed;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+}
+:root[data-look='terminal'] .btn::before {
+  content: '[';
+  opacity: 0.6;
+}
+:root[data-look='terminal'] .btn::after {
+  content: ']';
+  opacity: 0.6;
+}
+:root[data-look='terminal'] .btn.primary {
+  border-style: solid;
+}
+
+/* Kleine Beschriftung über Werten */
+.label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+:root[data-look='terminal'] .label::before {
+  content: '// ';
+}
+/* Blaupause: Beschriftungen wie Maßketten mit Endstrichen */
+:root[data-look='blaupause'] .label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+:root[data-look='blaupause'] .label::before {
+  content: '';
+  width: 14px;
+  height: 7px;
+  border-left: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+
+/* ===== Seitenaufbau ===== */
+.page {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  padding: 36px var(--pad) 56px;
+}
+/* Blaupause: feines Raster hinter den Seiten (still, keine Dauerbewegung) */
+:root[data-look='blaupause'] .page,
+:root[data-look='blaupause'] .hero {
+  background-image:
+    linear-gradient(rgba(var(--field-dot-rgb), 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--field-dot-rgb), 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(var(--field-dot-rgb), 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--field-dot-rgb), 0.025) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px,
+    16px 16px,
+    16px 16px;
+}
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.page-title {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-fvs);
+  font-weight: var(--display-weight);
+  letter-spacing: calc(var(--display-tracking) * 0.5);
+  text-transform: var(--display-transform);
+  font-size: calc(40px * var(--display-scale));
+  line-height: 1;
+  margin: 0;
+}
+:root[data-look='orbit'] .page-head {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+:root[data-look='orbit'] .page-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+:root[data-look='terminal'] .page-title::before {
+  content: '> ';
+  color: var(--safe);
+}
+:root[data-look='blaupause'] .page-title {
+  -webkit-text-stroke: 1.2px var(--text);
+  color: transparent;
+}
+.page-sub {
+  margin: 10px 0 0;
+  color: var(--text-dim);
+  max-width: 600px;
+}
+
+/* Zeilenlisten statt Karten: Haarlinien trennen */
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.rows > li {
+  border-bottom: 1px solid var(--line);
+}
+:root[data-look='blaupause'] .rows > li {
+  border-bottom-style: dashed;
+}
+
+.section-label {
+  margin: 34px 0 6px;
+}
+
+.empty {
+  padding: 28px 0;
+  color: var(--text-dim);
+}
+
+/* Statuspunkt */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--text-faint);
+}
+:root[data-look='terminal'] .dot {
+  border-radius: 0;
+}
+.dot.ok {
+  background: var(--safe);
+}
+.dot.info {
+  background: var(--text-dim);
+}
+.dot.warn {
+  background: var(--warn);
+}
+.dot.critical {
+  background: var(--threat);
+  box-shadow: 0 0 0 4px rgba(var(--threat-rgb), 0.18);
+}
+
+/* Gestaffeltes Einblenden: Kinder mit --i erscheinen nacheinander */
+.stagger > * {
+  animation: rise 520ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Ruhige Bewegung: Dauerbewegung und große Einblendungen weg */
+:root[data-motion='ruhig'] .stagger > * {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --pad: 20px;
+  }
+}

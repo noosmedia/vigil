@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Vigil
+Comment=Virenschutz im Hintergrund starten
+Exec=vigil --hidden
+Icon=vigil
+Terminal=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

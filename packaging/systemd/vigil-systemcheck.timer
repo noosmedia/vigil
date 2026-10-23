@@ -1,0 +1,11 @@
+# Vigil: Zeitplan des Systemchecks. Die Uhrzeit setzt set-config als Drop-in
+# /etc/systemd/system/vigil-systemcheck.timer.d/vigil.conf
+[Unit]
+Description=Vigil Systemcheck nach Zeitplan
+
+[Timer]
+OnCalendar=*-*-* 12:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

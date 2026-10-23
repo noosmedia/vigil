@@ -1,0 +1,34 @@
+[package]
+name = "vigil"
+description = "Virenschutz für Linux und Windows"
+version.workspace = true
+edition.workspace = true
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-single-instance = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+notify = "8"
+vigil-core = { path = "../crates/vigil-core" }
+ureq = { version = "3", features = ["json"] }
+ed25519-dalek = "3"
+base64 = "0.23"
+sha2 = "0.11"
+
+# Windows: Benachrichtigungen, Zustand des Vigil-Dienstes, UAC-Aufruf, Autostart, Systemsprache
+[target.'cfg(windows)'.dependencies]
+tauri-plugin-notification = "2"
+windows-service = "0.8.0"
+windows-sys = { version = "0.61.2", features = [
+    "Win32_Foundation",
+    "Win32_Globalization",
+    "Win32_System_Registry",
+    "Win32_System_Threading",
+    "Win32_UI_Shell",
+] }

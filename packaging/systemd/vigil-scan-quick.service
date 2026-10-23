@@ -1,0 +1,10 @@
+# Vigil: Schnellprüfung nach Zeitplan (ausgelöst von vigil-scan-quick.timer)
+[Unit]
+Description=Vigil Schnellprüfung
+After=clamav-daemon.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/vigil/vigil-helper scan --kind quick --trigger schedule
+Nice=15
+IOSchedulingClass=idle

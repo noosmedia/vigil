@@ -1,0 +1,10 @@
+# Vigil: Systemcheck nach Zeitplan (ausgelöst von vigil-systemcheck.timer)
+[Unit]
+Description=Vigil Systemcheck
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/vigil/vigil-helper systemcheck --trigger schedule
+Nice=15
+IOSchedulingClass=idle

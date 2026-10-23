@@ -1,0 +1,11 @@
+# Vigil: Zeitplan der Schnellprüfung. Die Uhrzeit setzt set-config als Drop-in
+# /etc/systemd/system/vigil-scan-quick.timer.d/vigil.conf
+[Unit]
+Description=Vigil Schnellprüfung nach Zeitplan
+
+[Timer]
+OnCalendar=*-*-* 12:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

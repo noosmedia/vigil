@@ -1,0 +1,14 @@
+# Vigil: zusätzliche Virensignaturen von Sanesecurity abrufen (ausgelöst von vigil-extrasigs.timer).
+# Der Helfer lädt nur, wenn in /etc/vigil/config.json "extraSignatures" nicht false ist, prüft
+# jede Datei (GPG-Signatur, Testladen mit clamscan) und hält mindestens 55 Minuten Abstand.
+[Unit]
+Description=Vigil zusätzliche Virensignaturen
+Wants=network-online.target
+After=network-online.target clamav-daemon.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/vigil/vigil-helper extra-signatures --trigger schedule
+Nice=15
+IOSchedulingClass=idle
+TimeoutStartSec=45min

@@ -1,0 +1,11 @@
+# Vigil: Zeitplan der vollständigen Prüfung. Die Uhrzeit setzt set-config als Drop-in
+# /etc/systemd/system/vigil-scan-full.timer.d/vigil.conf
+[Unit]
+Description=Vigil vollständige Prüfung nach Zeitplan
+
+[Timer]
+OnCalendar=Sun *-*-* 13:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

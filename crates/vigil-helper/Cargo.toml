@@ -1,0 +1,34 @@
+# Helfer mit root-Rechten, installiert als /usr/lib/vigil/vigil-scan und /usr/lib/vigil/vigil-helper
+[package]
+name = "vigil-helper"
+version.workspace = true
+edition.workspace = true
+publish = false
+
+[[bin]]
+name = "vigil-helper"
+path = "src/main.rs"
+
+[dependencies]
+vigil-core = { path = "../vigil-core" }
+serde_json = "1.0.150"
+# HTTPS für self-update --auto: rustls statt OpenSSL
+ureq = { version = "3.5.0", default-features = false, features = ["rustls"] }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2.186"
+
+# Windows: Vigil-Dienst (Diensteverwaltung), benannte Pipe, Prozessgruppe für Kindprozesse
+[target.'cfg(windows)'.dependencies]
+windows-service = "0.8.0"
+windows-sys = { version = "0.61.2", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_Security_Authorization",
+    "Win32_Storage_FileSystem",
+    "Win32_System_Pipes",
+    "Win32_System_IO",
+    "Win32_System_Threading",
+    "Win32_System_JobObjects",
+    "Win32_System_Console",
+] }

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "build": {
+    "beforeBuildCommand": "npm run build && cargo build --release -p vigil-helper --target x86_64-pc-windows-gnu && bash packaging/windows/fetch-clamav.sh"
+  },
+  "bundle": {
+    "targets": [
+      "nsis"
+    ],
+    "shortDescription": "Virenschutz für Windows",
+    "longDescription": "Vigil prüft den Rechner mit ClamAV nach Zeitplan, überwacht Downloads, verwaltet die Quarantäne und prüft Windows Update, Defender, Firewall und BitLocker.",
+    "publisher": "noosmedia",
+    "copyright": "noosmedia, GPL-3.0-or-later",
+    "resources": {
+      "../target/x86_64-pc-windows-gnu/release/vigil-helper.exe": "vigil-helper.exe",
+      "../target/clamav-win/*.exe": "clamav/",
+      "../target/clamav-win/*.dll": "clamav/",
+      "../target/clamav-win/README.md": "clamav/README.md",
+      "../target/clamav-win/certs/*": "clamav/certs/",
+      "../target/clamav-win/COPYING/*": "clamav/COPYING/"
+    },
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      },
+      "nsis": {
+        "installMode": "perMachine",
+        "languages": [
+          "German",
+          "English"
+        ],
+        "displayLanguageSelector": false,
+        "installerIcon": "icons/icon.ico",
+        "installerHooks": "../packaging/windows/hooks.nsh"
+      }
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.png",
+      "icons/icon.ico"
+    ]
+  }
+}

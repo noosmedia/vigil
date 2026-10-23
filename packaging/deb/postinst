@@ -1,0 +1,50 @@
+#!/bin/sh
+# Vigil: nach Installation und Aktualisierung des Pakets.
+# Legt die Ordner an, lädt systemd neu, schaltet Timer und ClamAV-Dienste ein
+# und erfasst beim ersten Mal den Ausgangsstand von rkhunter.
+# Der Timer für automatische Updates (vigil-selfupdate.timer) bleibt aus, bis
+# set-config ihn einschaltet ("updates": {"auto": true}). Der Timer für die zusätzlichen
+# Signaturen (vigil-extrasigs.timer) ist bei Erstinstallation an ("extraSignatures": true).
+set -e
+
+TIMERS="vigil-scan-quick.timer vigil-scan-full.timer vigil-systemcheck.timer vigil-extrasigs.timer"
+
+case "$1" in
+    configure)
+        # Ordner mit festen Rechten (auch wenn sie schon existieren)
+        install -d -o root -g root /var/lib/vigil /var/lib/vigil/reports /var/lib/vigil/quarantine \
+            /var/lib/vigil/updates /var/lib/vigil/pro /etc/vigil
+        chmod 0755 /var/lib/vigil /var/lib/vigil/reports /etc/vigil
+        chmod 0700 /var/lib/vigil/quarantine /var/lib/vigil/updates /var/lib/vigil/pro
+        chmod 0755 /usr/lib/vigil/vigil-scan /usr/lib/vigil/vigil-helper 2>/dev/null || true
+
+        if [ -d /run/systemd/system ]; then
+            systemctl daemon-reload || true
+
+            if [ -f /etc/vigil/config.json ]; then
+                # Vorhandene Einstellungen anwenden: Drop-ins schreiben, Timer passend ein- oder ausschalten
+                # (auch vigil-selfupdate.timer und vigil-extrasigs.timer; ältere Konfigurationen ohne
+                # "extraSignatures" gelten als eingeschaltet)
+                /usr/lib/vigil/vigil-helper set-config --json "$(cat /etc/vigil/config.json)" >/dev/null \
+                    || echo "Vigil: Zeitplan konnte nicht angewendet werden." >&2
+            else
+                # Erstinstallation: Standardzeitplan aus den Units, alle Timer an
+                systemctl enable --now $TIMERS || true
+            fi
+
+            # ClamAV-Dienste einschalten (clamd startet erst, wenn Signaturen vorliegen)
+            systemctl enable clamav-freshclam.service clamav-daemon.service || true
+            systemctl start clamav-freshclam.service || true
+            systemctl start clamav-daemon.service || true
+        fi
+
+        # rkhunter: Ausgangsstand nur beim ersten Mal erfassen
+        if [ -x /usr/bin/rkhunter ] && [ ! -f /var/lib/rkhunter/db/rkhunter.dat ]; then
+            /usr/bin/rkhunter --propupd --nocolors >/dev/null 2>&1 || true
+        fi
+        ;;
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+esac
+
+exit 0

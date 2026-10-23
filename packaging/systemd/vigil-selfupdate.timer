@@ -1,0 +1,12 @@
+# Vigil: Zeitplan der automatischen Updates. Die Uhrzeit setzt set-config als Drop-in
+# /etc/systemd/system/vigil-selfupdate.timer.d/vigil.conf; set-config schaltet den Timer
+# nur ein, wenn automatische Updates eingeschaltet sind (Standard: aus).
+[Unit]
+Description=Vigil automatisches Update nach Zeitplan
+
+[Timer]
+OnCalendar=*-*-* 11:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

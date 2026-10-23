@@ -1,0 +1,35 @@
+#!/bin/sh
+# Vigil: vor dem Entfernen des Pakets Timer stoppen und abschalten, Vigil Pro und die
+# zusätzlichen Signaturen (vigil-sanesecurity-* im Datenbankordner von clamd) entfernen.
+# Bei einer Aktualisierung bleiben Timer, Dienste und Pro unverändert (postinst wendet den
+# Zeitplan neu an). vigil-selfupdate.service wird dabei nie gestoppt, denn ein automatisches
+# Update läuft genau in diesem Dienst und würde sonst mitten in apt-get beendet.
+set -e
+
+TIMERS="vigil-scan-quick.timer vigil-scan-full.timer vigil-systemcheck.timer vigil-selfupdate.timer vigil-extrasigs.timer"
+SERVICES="vigil-scan-quick.service vigil-scan-full.service vigil-systemcheck.service vigil-extrasigs.service"
+
+case "$1" in
+    remove|deconfigure)
+        if [ -d /run/systemd/system ]; then
+            systemctl disable --now $TIMERS || true
+            systemctl stop $SERVICES || true
+        fi
+        # Nur beim Entfernen: Vigil Pro mit entfernen (remove-hooks, Dateien, Freigabe),
+        # solange der Helfer noch da ist
+        if [ "$1" = remove ] && { [ -d /usr/lib/vigil/pro ] || [ -f /var/lib/vigil/pro/token ]; }; then
+            /usr/lib/vigil/vigil-helper pro-remove >/dev/null \
+                || echo "Vigil: Vigil Pro konnte nicht vollständig entfernt werden." >&2
+        fi
+        # Nur beim Entfernen: zusätzliche Signaturen aus clamd entfernen, clamd neu laden und
+        # "Checks" in freshclam.conf auf den Stand vor Vigil zurücksetzen
+        if [ "$1" = remove ]; then
+            /usr/lib/vigil/vigil-helper extra-signatures-remove >/dev/null \
+                || echo "Vigil: Die zusätzlichen Signaturen konnten nicht vollständig entfernt werden." >&2
+        fi
+        ;;
+    upgrade|failed-upgrade)
+        ;;
+esac
+
+exit 0

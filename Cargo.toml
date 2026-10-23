@@ -1,0 +1,13 @@
+# Cargo-Workspace: Kernbibliothek, Helfer mit root-Rechten und die Tauri-App
+[workspace]
+resolver = "2"
+members = ["crates/vigil-core", "crates/vigil-helper", "src-tauri"]
+
+[workspace.package]
+version = "0.4.1"
+edition = "2021"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

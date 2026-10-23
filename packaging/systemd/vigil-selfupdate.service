@@ -1,0 +1,11 @@
+# Vigil: automatisches Update von Vigil selbst (ausgelöst von vigil-selfupdate.timer).
+# Der Helfer installiert nur, wenn in /etc/vigil/config.json "updates": {"auto": true} gilt.
+[Unit]
+Description=Vigil automatisches Update
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/vigil/vigil-helper self-update --auto
+TimeoutStartSec=45min

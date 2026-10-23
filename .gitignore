@@ -1,0 +1,10 @@
+node_modules/
+target/
+dist/
+src-tauri/gen/
+.env
+.edit-backups/
+/backups/
+# Interne Arbeitsnotizen, nicht Teil des Repositorys
+/docs/ARCHITEKTUR.md
+/docs/ERWEITERUNG-0.2.md
