@@ -60,7 +60,7 @@ pub fn validate(cfg: &Config) -> Result<(), Text> {
         ));
     }
     for p in &cfg.scan.exclude_paths {
-        if !p.starts_with('/') {
+        if !std::path::Path::new(p).is_absolute() {
             return Err(tr!("Ausgeschlossene Pfade müssen absolut sein: {}", "Excluded paths must be absolute: {}", p));
         }
         if p.contains('\n') {

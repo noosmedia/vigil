@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.2 (2026-11-07)
+
+### Behoben
+- Windows: Ordner lassen sich wieder von der Prüfung ausnehmen. Bisher lehnte Vigil Pfade wie `D:\Ordner` mit der Meldung „Ausgeschlossene Pfade müssen absolut sein“ ab und speicherte die Einstellungen nicht.
+- Unter Linux ändert sich nichts an der Bedienung.
+
+---
+
+### Fixed
+- Windows: Folders can be excluded from scans again. Until now, Vigil rejected paths like `D:\Folder` with the message "Excluded paths must be absolute" and did not save the settings.
+- Nothing changes in how Vigil works on Linux.
+
 ## 0.4.1 (2026-10-23)
 
 ### Neu
